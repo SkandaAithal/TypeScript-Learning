@@ -403,7 +403,14 @@ function Logger(logString: string) {
     console.log(constructor);
   };
 }
+
+function WithTemplate(template: string, hookId: string) {
+  return function (constructor: Function) {
+    console.log("Rendering Template");
+  };
+}
 @Logger("Im logging")
+@WithTemplate("abc", "xyz")
 class Persona {
   name = "MAX";
 
@@ -413,3 +420,60 @@ class Persona {
 }
 let per1 = new Persona();
 console.log(per1);
+
+//----------
+
+function Log(target: any, propertyName: string | Symbol) {
+  console.log(target, propertyName);
+}
+
+function Log2(target: any, name: string, descriptor: PropertyDescriptor) {
+  console.log(target);
+  console.log(name);
+  console.log(descriptor);
+}
+
+function Log3(
+  target: any,
+  name: string | Symbol,
+  descriptor: PropertyDescriptor
+) {
+  console.log(target);
+  console.log(name);
+  console.log(descriptor);
+}
+
+function Log4(target: any, name: string | Symbol, position: number) {
+  console.log(target);
+  console.log(name);
+  console.log(position);
+}
+
+class Product {
+  @Log
+  title: string;
+  private price: number;
+  @Log2
+  set priceee(value: number) {
+    if (value > 0) {
+      this.price = value;
+    }
+  }
+  constructor(t: string, p: number) {
+    this.title = t;
+    this.price = p;
+  }
+  @Log3
+  getPrice(@Log4 tax: number) {
+    console.log(this.price + tax);
+  }
+}
+
+class Course {
+  title: string;
+  price: number;
+  constructor(t: string, p: number) {
+    this.title = t;
+    this.price = p;
+  }
+}
