@@ -1,15 +1,21 @@
 "use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
 function add(a, b) {
-    if (typeof a === "number") {
+    if (typeof a === "number" && typeof b === "number") {
         return a + b;
     }
     else {
         return a + b.toString();
     }
 }
+const result = add("max", "sigh");
+result.split("");
 console.log(add("2", 14));
-let alias;
-alias = add;
 const objtype = {
     num1: 12,
     color: "red",
@@ -27,7 +33,6 @@ var Direction;
 })(Direction || (Direction = {}));
 const where = Direction.LEFT;
 console.log(where);
-console.log(alias(2, 0));
 function sendrequest(data, cb) {
     return cb({ data: "hi" });
 }
@@ -168,4 +173,135 @@ class Person {
 }
 let person1 = new Person("abc", 3, "sde", 23, 30000);
 console.log(person1);
-console.log("");
+let emp1 = {
+    name: "rak",
+    privileges: ["a", "b"],
+    salary: 2000,
+};
+let que = "krishna"; //it is a string type
+// type guards
+function printType(obj) {
+    console.log(obj.name);
+    if ("salary" in obj) {
+        console.log(obj.salary);
+    }
+    if ("privileges" in obj) {
+        console.log(obj.privileges);
+    }
+}
+let unkemp = {
+    name: "brave",
+    salary: 20,
+};
+printType(unkemp);
+class Car {
+    drive() {
+        console.log("drivinh car");
+    }
+}
+class Truck {
+    drive() {
+        console.log("driving truck");
+    }
+    loadCargo(cargo) {
+        console.log("loading cargo " + cargo);
+    }
+}
+const v1 = new Car();
+const v2 = new Truck();
+function useVehicle(vehicle) {
+    vehicle.drive();
+    // if ("loadCargo" in vehicle) {
+    //   vehicle.loadCargo(299);
+    // }
+    if (vehicle instanceof Truck) {
+        vehicle.loadCargo(0);
+    }
+}
+useVehicle(v2);
+useVehicle(v1);
+function movingAnimal(animal) {
+    switch (animal.type) {
+        case "bird":
+            console.log(animal.fly);
+            break;
+        case "horse":
+            console.log(animal.run);
+    }
+}
+movingAnimal({ type: "bird", fly: "fly" });
+movingAnimal({ type: "horse", run: "run" });
+const error = {
+    email: "sn c s",
+    password: "nooo",
+};
+//generics
+const arr = [];
+// arr[0].split("");
+const promise = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        resolve("I have fulfilled");
+    }, 1000);
+});
+promise.then((data) => {
+    console.log(data);
+});
+function merge(obj, objb) {
+    return Object.assign(obj, objb);
+}
+const mergeobject = merge({ name: "max" }, { age: 10 });
+console.log(mergeobject);
+function countAndPrint(element) {
+    let description = "Got 0 elements";
+    if (element.length === 1) {
+        description = "Got 1 element";
+    }
+    else {
+        description = "Got" + element.length + "element";
+    }
+    return [element, description];
+}
+//generic class
+class DataStroage {
+    constructor() {
+        this.storage = [];
+    }
+    additem(item) {
+        return this.storage.push(item);
+    }
+    removeItem(item) {
+        return this.storage.splice(this.storage.indexOf(item), 1);
+    }
+    printStorage() {
+        console.log(this.storage);
+    }
+}
+const disk = new DataStroage();
+disk.additem("jij");
+disk.additem("jij");
+disk.additem("jiiii");
+disk.printStorage();
+const box = new DataStroage();
+box.additem(10);
+box.additem(1000);
+box.additem(10000);
+box.printStorage();
+const arr1 = ["ams", "sld"];
+// Decorators
+function Logger(logString) {
+    return function (constructor) {
+        console.log(logString);
+        console.log(constructor);
+    };
+}
+let Persona = class Persona {
+    constructor() {
+        this.name = "MAX";
+        console.log("Creating person object..");
+    }
+};
+Persona = __decorate([
+    Logger("Im logging")
+], Persona);
+let per1 = new Persona();
+console.log(per1);
